@@ -287,7 +287,7 @@ function Rooms() {
           title="Deluxe Room"
           desc="Spacious sanctuary with king-size bed, premium WiFi, and breathtaking Kodaikanal village panoramas."
           imgSrc="/105.jpg"
-          videoUrl="/VN20250811_140943-Copy.mp4"
+          videoUrl="/deluxe%20room.mp4"
           maxRooms={2}
           onBookNow={(title, max) => setPopupData({ isOpen: true, roomTitle: title, maxRooms: max })}
         />
@@ -295,6 +295,7 @@ function Rooms() {
           title="Standard Room"
           desc="Comfortable haven with queen bed and carefully selected amenities for a relaxing mountain retreat."
           imgSrc="/102.jpg"
+          videoUrl="/standard%20room.mp4"
           maxRooms={5}
           onBookNow={(title, max) => setPopupData({ isOpen: true, roomTitle: title, maxRooms: max })}
         />
@@ -302,6 +303,7 @@ function Rooms() {
           title="Luxury Suite"
           desc="Elegant suite featuring separate living area, private balcony with full village views, and concierge service."
           imgSrc="/109.jpg"
+          videoUrl="/luxury%20suite%20room.mp4"
           maxRooms={3}
           onBookNow={(title, max) => setPopupData({ isOpen: true, roomTitle: title, maxRooms: max })}
         />
@@ -405,10 +407,13 @@ export default function ChennaiGrandResidency() {
           color: #1a1a1a;
           background: #ffffff;
           overflow-x: hidden;
+          overflow-y: auto;
+          min-height: 100vh;
         }
 
         .app {
           min-height: 100vh;
+          padding-bottom: 0;
         }
 
         /* Navbar */
@@ -1031,7 +1036,8 @@ export default function ChennaiGrandResidency() {
         footer {
           background: linear-gradient(135deg, #1a1a1a, #2d2d2d);
           color: white;
-          padding: 80px 40px 40px;
+          padding: 90px 40px 60px;
+          margin-bottom: 0;
         }
 
         .footer-content {
