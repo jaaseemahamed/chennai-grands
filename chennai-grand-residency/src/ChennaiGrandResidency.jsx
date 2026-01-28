@@ -287,7 +287,7 @@ function Rooms() {
           title="Deluxe Room"
           desc="Spacious sanctuary with king-size bed, premium WiFi, and breathtaking Kodaikanal village panoramas."
           imgSrc="/105.jpg"
-          videoUrl="/deluxe%20room.mp4"
+          videoUrl="https://drive.google.com/uc?id=1UOZbZ5M3Ztt-DraS7l8Et2KURx6WNWTI&export=download"
           maxRooms={2}
           onBookNow={(title, max) => setPopupData({ isOpen: true, roomTitle: title, maxRooms: max })}
         />
@@ -295,7 +295,7 @@ function Rooms() {
           title="Standard Room"
           desc="Comfortable haven with queen bed and carefully selected amenities for a relaxing mountain retreat."
           imgSrc="/102.jpg"
-          videoUrl="/standard%20room.mp4"
+          videoUrl="https://drive.google.com/uc?id=1eiGExbcmY0ra5Joemand5E4KddMxMLmF&export=download"
           maxRooms={5}
           onBookNow={(title, max) => setPopupData({ isOpen: true, roomTitle: title, maxRooms: max })}
         />
@@ -303,7 +303,7 @@ function Rooms() {
           title="Luxury Suite"
           desc="Elegant suite featuring separate living area, private balcony with full village views, and concierge service."
           imgSrc="/109.jpg"
-          videoUrl="/luxury%20suite%20room.mp4"
+          videoUrl="https://drive.google.com/uc?id=1KyJCx55yqZvv2ZaL7Cr0YPyvA4INQOcM&export=download"
           maxRooms={3}
           onBookNow={(title, max) => setPopupData({ isOpen: true, roomTitle: title, maxRooms: max })}
         />
