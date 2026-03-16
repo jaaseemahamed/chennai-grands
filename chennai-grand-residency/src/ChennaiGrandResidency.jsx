@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Calendar, Users, Phone, Mail, MapPin, Star, Play, X, Check } from "lucide-react";
+import ChatBot from "./ChatBot";
 
 function Navbar() {
   const [scrolled, setScrolled] = useState(false);
@@ -42,7 +43,7 @@ function Hero() {
           <span className="gradient-text">Heart of Hills</span>
         </h1>
         <p className="hero-description">
-          Immerse yourself in the perfect blend of comfort and elegance amidst Kodaikanal's scenic beauty. 
+          Immerse yourself in the perfect blend of comfort and elegance amidst Kodaikanal's scenic beauty.
           Your unforgettable mountain escape awaits.
         </p>
         <div className="hero-features">
@@ -62,7 +63,7 @@ function Hero() {
         <a href="#rooms" className="hero-cta">
           <span>Explore Rooms</span>
           <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-            <path d="M7.5 15L12.5 10L7.5 5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            <path d="M7.5 15L12.5 10L7.5 5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
         </a>
       </div>
@@ -98,7 +99,7 @@ function BookingPopup({ isOpen, onClose, roomTitle, maxRooms }) {
     try {
       const botToken = '8007590401:AAH1RcXj_dio2DWXg8Ob5gq902kWXiHVwJE';
       const chatId = '1350433378';
-      
+
       const message = `
 🏨 New Booking Request
 ━━━━━━━━━━━━━━━━━━
@@ -383,6 +384,22 @@ function Footer() {
 }
 
 export default function ChennaiGrandResidency() {
+  const [chatBooking, setChatBooking] = useState({ isOpen: false, roomTitle: "", maxRooms: 1 });
+
+  const roomMaxMap = {
+    "Standard Room": 5,
+    "Deluxe Room": 2,
+    "Luxury Suite": 3,
+  };
+
+  const handleChatBookNow = (roomName) => {
+    setChatBooking({
+      isOpen: true,
+      roomTitle: roomName,
+      maxRooms: roomMaxMap[roomName] || 1,
+    });
+  };
+
   useEffect(() => {
     document.documentElement.lang = "en";
   }, []);
@@ -394,6 +411,13 @@ export default function ChennaiGrandResidency() {
       <Rooms />
       <Amenities />
       <Footer />
+      <ChatBot onBookNow={handleChatBookNow} />
+      <BookingPopup
+        isOpen={chatBooking.isOpen}
+        onClose={() => setChatBooking({ isOpen: false, roomTitle: "", maxRooms: 1 })}
+        roomTitle={chatBooking.roomTitle}
+        maxRooms={chatBooking.maxRooms}
+      />
 
       <style>{`
         * {
