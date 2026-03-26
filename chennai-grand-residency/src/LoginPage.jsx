@@ -89,6 +89,10 @@ export default function LoginPage({ onLoginSuccess }) {
         <div className="lp-panel-left">
           <div className="lp-panel-logo">
             <div className="lp-logo-icon">CGR</div>
+            <button className="lp-back-home" onClick={onBack}>
+              <ArrowRight size={14} style={{ transform: "rotate(180deg)" }} />
+              <span>Back to Home</span>
+            </button>
           </div>
           <h2 className="lp-panel-title">Chennai Grand<br />Residency Group</h2>
           <p className="lp-panel-sub">Your gateway to two iconic luxury retreats</p>
@@ -349,8 +353,32 @@ export default function LoginPage({ onLoginSuccess }) {
           pointer-events: none;
         }
 
-        .lp-panel-logo { margin-bottom: 32px; }
-
+        .lp-panel-logo { 
+          margin-bottom: 32px; 
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+        }
+        
+        .lp-back-home {
+          background: rgba(255,255,255,0.08);
+          border: 1px solid rgba(255,255,255,0.15);
+          padding: 8px 12px;
+          border-radius: 20px;
+          color: rgba(255,255,255,0.7);
+          font-size: 12px;
+          cursor: pointer;
+          display: flex;
+          align-items: center;
+          gap: 6px;
+          transition: all 0.2s;
+        }
+        
+        .lp-back-home:hover {
+          background: rgba(255,255,255,0.15);
+          color: #fff;
+        }
+        
         .lp-logo-icon {
           width: 60px; height: 60px;
           background: linear-gradient(135deg, #d4af37, #f4d03f);

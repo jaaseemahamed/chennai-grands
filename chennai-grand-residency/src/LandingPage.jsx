@@ -31,11 +31,13 @@ export default function LandingPage({ onSelectResort, user, onLogout }) {
             <span className="landing-brand-sub">RESIDENCY GROUP</span>
           </div>
         </div>
-        {user && (
+        {user ? (
           <div className="landing-user-bar">
             <span className="landing-user-greet">👋 Welcome, <strong>{user.name || user.email}</strong></span>
             <button className="landing-logout-btn" onClick={onLogout}>Sign Out</button>
           </div>
+        ) : (
+          <button className="landing-logout-btn" onClick={onLogin}>Sign In</button>
         )}
       </header>
 

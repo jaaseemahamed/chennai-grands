@@ -38,24 +38,29 @@ function App() {
     window.scrollTo(0, 0);
   };
 
+  const handleLoginRequest = () => {
+    setCurrentView('login');
+    window.scrollTo(0, 0);
+  };
+
   // Don't render until we've checked localStorage
   if (!authChecked) return null;
 
-  // Not logged in — show login page
-  if (!user) {
-    return <LoginPage onLoginSuccess={handleLoginSuccess} />;
+  // Determine which page to show based on currentView
+  // All pages are now technically public for SEO, but booking features will require login
+  if (currentView === 'login') {
+    return <LoginPage onLoginSuccess={handleLoginSuccess} onBack={handleBack} />;
   }
 
-  // Logged in — show the resort pages
   if (currentView === 'hill') {
-    return <ChennaiGrandResidency onBack={handleBack} user={user} onLogout={handleLogout} />;
+    return <ChennaiGrandResidency onBack={handleBack} user={user} onLogout={handleLogout} onLogin={handleLoginRequest} />;
   }
 
   if (currentView === 'city') {
-    return <CityViewResidency onBack={handleBack} user={user} onLogout={handleLogout} />;
+    return <CityViewResidency onBack={handleBack} user={user} onLogout={handleLogout} onLogin={handleLoginRequest} />;
   }
 
-  return <LandingPage onSelectResort={handleSelectResort} user={user} onLogout={handleLogout} />;
+  return <LandingPage onSelectResort={handleSelectResort} onLogin={handleLoginRequest} user={user} onLogout={handleLogout} />;
 }
 
 ReactDOM.createRoot(document.getElementById('root')).render(

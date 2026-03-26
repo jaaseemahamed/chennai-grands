@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Calendar, Users, Phone, Mail, MapPin, Star, Play, X, Check, ArrowLeft, Building2 } from "lucide-react";
 import ChatBot from "./ChatBot";
 
-function Navbar({ onBack }) {
+function Navbar({ onBack, user, onLogout, onLogin }) {
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
@@ -28,8 +28,15 @@ function Navbar({ onBack }) {
         <ul className="cv-nav-links">
           <li><a href="#home">Home</a></li>
           <li><a href="#rooms">Rooms</a></li>
-          <li><a href="#amenities">Amenities</a></li>
-          <li><a href="#contact">Contact</a></li>
+          <li className="nav-hide-mobile"><a href="#amenities">Amenities</a></li>
+          <li className="nav-hide-mobile"><a href="#contact">Contact</a></li>
+          <li>
+            {user ? (
+              <button className="hv-logout-btn" onClick={onLogout}>Sign Out</button>
+            ) : (
+              <button className="hv-logout-btn" onClick={onLogin}>Sign In</button>
+            )}
+          </li>
         </ul>
       </div>
     </nav>
@@ -343,7 +350,7 @@ function Footer() {
   );
 }
 
-export default function CityViewResidency({ onBack }) {
+export default function CityViewResidency({ onBack, user, onLogout, onLogin }) {
   const [chatBooking, setChatBooking] = useState({ isOpen: false, roomTitle: "", maxRooms: 1 });
 
   const roomMaxMap = {
@@ -367,7 +374,7 @@ export default function CityViewResidency({ onBack }) {
 
   return (
     <div className="cv-app">
-      <Navbar onBack={onBack} />
+      <Navbar onBack={onBack} user={user} onLogout={onLogout} onLogin={onLogin} />
       <Hero />
       <Rooms />
       <Amenities />
@@ -508,6 +515,24 @@ export default function CityViewResidency({ onBack }) {
         }
 
         .cv-nav-links a:hover::after { width: 100%; }
+
+        .hv-logout-btn {
+          padding: 8px 18px;
+          background: rgba(30, 80, 160, 0.08);
+          border: 1px solid rgba(30, 80, 160, 0.2);
+          border-radius: 20px;
+          color: #1565c0;
+          font-size: 13px;
+          font-weight: 600;
+          cursor: pointer;
+          transition: all 0.25s;
+          font-family: inherit;
+        }
+
+        .hv-logout-btn:hover {
+          background: rgba(30, 80, 160, 0.15);
+          color: #1e88e5;
+        }
 
         /* Premium Lighting & Particles */
         .cv-hero-particles {
