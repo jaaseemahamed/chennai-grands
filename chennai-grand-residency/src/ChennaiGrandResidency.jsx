@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { Calendar, Users, Phone, Mail, MapPin, Star, Play, X, Check } from "lucide-react";
+import { Calendar, Users, Phone, Mail, MapPin, Star, Play, X, Check, ArrowLeft } from "lucide-react";
 import ChatBot from "./ChatBot";
 
-function Navbar() {
+function Navbar({ onBack }) {
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
@@ -14,11 +14,17 @@ function Navbar() {
   return (
     <nav className={scrolled ? 'scrolled' : ''}>
       <div className="nav-container">
+        {onBack && (
+          <button className="hv-back-btn" onClick={onBack}>
+            <ArrowLeft size={18} />
+            <span>All Resorts</span>
+          </button>
+        )}
         <div className="logo">
           <div className="logo-icon">CGR</div>
           <div className="logo-text">
             <span className="brand-name">CHENNAI GRAND</span>
-            <span className="brand-sub">RESIDENCY</span>
+            <span className="brand-sub">RESIDENCY · HILL &amp; MOUNTAIN VIEW</span>
           </div>
         </div>
         <ul className="nav-links">
@@ -35,9 +41,18 @@ function Navbar() {
 function Hero() {
   return (
     <section className="hero" id="home">
+      <div className="hero-particles">
+        {[...Array(15)].map((_, i) => (
+          <div key={i} className={`particle particle-${i % 5}`} />
+        ))}
+      </div>
+      <div className="hero-lighting">
+        <div className="lighting-gold" />
+        <div className="lighting-mountain-blue" />
+      </div>
       <div className="hero-overlay"></div>
       <div className="hero-content">
-        <div className="hero-badge">★ Premier Kodaikanal Retreat ★</div>
+        <div className="hero-badge">✦ Premier Kodaikanal Hill &amp; Mountain Retreat ✦</div>
         <h1 className="hero-title">
           Experience Luxury in the<br />
           <span className="gradient-text">Heart of Hills</span>
@@ -383,7 +398,7 @@ function Footer() {
   );
 }
 
-export default function ChennaiGrandResidency() {
+export default function ChennaiGrandResidency({ onBack }) {
   const [chatBooking, setChatBooking] = useState({ isOpen: false, roomTitle: "", maxRooms: 1 });
 
   const roomMaxMap = {
@@ -406,12 +421,17 @@ export default function ChennaiGrandResidency() {
 
   return (
     <div className="app">
-      <Navbar />
+      <Navbar onBack={onBack} />
       <Hero />
       <Rooms />
       <Amenities />
       <Footer />
-      <ChatBot onBookNow={handleChatBookNow} />
+      <ChatBot 
+        onBookNow={handleChatBookNow} 
+        propertyName="Chennai Grand Residency"
+        propertyLocation="Near Manorama Building, Pachamarathu Odai, Naidupuram, Kodaikanal"
+        googleMapsLink="https://maps.app.goo.gl/y2HpCeBNegftkiMfA"
+      />
       <BookingPopup
         isOpen={chatBooking.isOpen}
         onClose={() => setChatBooking({ isOpen: false, roomTitle: "", maxRooms: 1 })}
@@ -460,10 +480,34 @@ export default function ChennaiGrandResidency() {
         .nav-container {
           max-width: 1400px;
           margin: 0 auto;
-          padding: 20px 40px;
+          padding: 18px 40px;
           display: flex;
           justify-content: space-between;
           align-items: center;
+          gap: 16px;
+        }
+
+        .hv-back-btn {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          padding: 10px 18px;
+          background: rgba(212, 175, 55, 0.08);
+          border: 1px solid rgba(212, 175, 55, 0.2);
+          border-radius: 30px;
+          color: #b8942a;
+          font-size: 14px;
+          font-weight: 600;
+          cursor: pointer;
+          transition: all 0.3s;
+          font-family: inherit;
+          white-space: nowrap;
+          flex-shrink: 0;
+        }
+
+        .hv-back-btn:hover {
+          background: rgba(212, 175, 55, 0.15);
+          transform: translateX(-2px);
         }
 
         .logo {
@@ -538,6 +582,70 @@ export default function ChennaiGrandResidency() {
           width: 100%;
         }
 
+        /* Premium Lighting & Particles */
+        .hero-particles {
+          position: absolute;
+          inset: 0;
+          z-index: 1;
+          overflow: hidden;
+          pointer-events: none;
+        }
+
+        .particle {
+          position: absolute;
+          border-radius: 50%;
+          animation: floatEffect linear infinite;
+          opacity: 0.2;
+        }
+
+        .particle-0 { width: 10px; height: 10px; background: #d4af37; left: 15%; animation-duration: 22s; }
+        .particle-1 { width: 12px; height: 12px; background: #64b5f6; left: 35%; animation-duration: 28s; animation-delay: -7s; }
+        .particle-2 { width: 6px; height: 6px; background: #fff; left: 60%; animation-duration: 20s; animation-delay: -3s; }
+        .particle-3 { width: 14px; height: 14px; background: #d4af37; left: 75%; animation-duration: 24s; animation-delay: -12s; }
+        .particle-4 { width: 16px; height: 16px; background: #42a5f5; left: 90%; animation-duration: 32s; animation-delay: -5s; }
+
+        @keyframes floatEffect {
+          0% { transform: translateY(110vh) rotate(0deg); opacity: 0; }
+          20% { opacity: 0.25; }
+          80% { opacity: 0.25; }
+          100% { transform: translateY(-20vh) rotate(360deg); opacity: 0; }
+        }
+
+        .hero-lighting {
+          position: absolute;
+          inset: 0;
+          z-index: 1;
+          pointer-events: none;
+        }
+
+        .lighting-gold {
+          position: absolute;
+          top: -15%; left: -5%;
+          width: 55%; height: 75%;
+          background: radial-gradient(circle, rgba(212, 175, 55, 0.12) 0%, transparent 65%);
+          filter: blur(70px);
+          animation: pulseGold 12s ease-in-out infinite alternate;
+        }
+
+        .lighting-mountain-blue {
+          position: absolute;
+          bottom: -15%; right: -5%;
+          width: 55%; height: 75%;
+          background: radial-gradient(circle, rgba(74, 144, 217, 0.12) 0%, transparent 65%);
+          filter: blur(70px);
+          animation: pulseBlue 14s ease-in-out infinite alternate-reverse;
+        }
+
+        @keyframes pulseGold {
+          from { transform: scale(1) translate(0, 0); opacity: 0.4; }
+          to { transform: scale(1.15) translate(3%, 4%); opacity: 0.7; }
+        }
+
+        @keyframes pulseBlue {
+          from { transform: scale(1) translate(0, 0); opacity: 0.4; }
+          to { transform: scale(1.2) translate(-5%, -3%); opacity: 0.7; }
+        }
+
         /* Hero */
         .hero {
           position: relative;
@@ -556,85 +664,90 @@ export default function ChennaiGrandResidency() {
           left: 0;
           right: 0;
           bottom: 0;
-          background: url('https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=1920') center/cover;
-          opacity: 0.3;
-          animation: slowZoom 20s ease-in-out infinite alternate;
+          background: url('/city-background.png') center/cover;
+          opacity: 0.45;
+          filter: saturate(1.3) contrast(1.1);
+          animation: slowZoom 25s ease-in-out infinite alternate;
         }
 
         @keyframes slowZoom {
           from { transform: scale(1); }
-          to { transform: scale(1.1); }
+          to { transform: scale(1.15); }
         }
 
         .hero-overlay {
           position: absolute;
           inset: 0;
-          background: radial-gradient(circle at center, transparent 0%, rgba(0,0,0,0.4) 100%);
+          background: linear-gradient(160deg, rgba(0, 10, 20, 0.5) 0%, rgba(0, 0, 0, 0.1) 50%, rgba(15, 10, 0, 0.6) 100%);
+          backdrop-filter: blur(1px);
+          z-index: 2;
         }
 
         .hero-content {
           position: relative;
-          z-index: 2;
+          z-index: 10;
           text-align: center;
           max-width: 900px;
           padding: 0 40px;
-          animation: fadeInUp 1s ease-out;
+          animation: fadeInUp 1.2s cubic-bezier(0.2, 0.8, 0.2, 1);
         }
 
         @keyframes fadeInUp {
-          from {
-            opacity: 0;
-            transform: translateY(30px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
+          from { opacity: 0; transform: translateY(40px); }
+          to { opacity: 1; transform: translateY(0); }
         }
 
         .hero-badge {
           display: inline-block;
-          padding: 8px 20px;
-          background: rgba(212, 175, 55, 0.15);
+          padding: 8px 24px;
+          background: rgba(212, 175, 55, 0.12);
           border: 1px solid rgba(212, 175, 55, 0.3);
-          border-radius: 30px;
+          border-radius: 40px;
           color: #f4d03f;
-          font-size: 13px;
-          font-weight: 600;
-          letter-spacing: 2px;
-          margin-bottom: 30px;
-          backdrop-filter: blur(10px);
+          font-size: 11px;
+          font-weight: 700;
+          letter-spacing: 3px;
+          margin-bottom: 35px;
+          backdrop-filter: blur(12px);
+          text-transform: uppercase;
         }
 
         .hero-title {
-          font-size: 72px;
+          font-family: 'Playfair Display', serif;
+          font-size: 82px;
           font-weight: 700;
           color: white;
-          line-height: 1.2;
-          margin-bottom: 30px;
-          letter-spacing: -2px;
+          line-height: 1.1;
+          margin-bottom: 35px;
+          letter-spacing: -3px;
+          text-shadow: 0 10px 30px rgba(0,0,0,0.3);
         }
 
         .gradient-text {
-          background: linear-gradient(135deg, #d4af37, #f4d03f);
+          background: linear-gradient(135deg, #f4d03f, #d4af37, #f4d03f);
           -webkit-background-clip: text;
           -webkit-text-fill-color: transparent;
           background-clip: text;
+          display: block;
+          margin-top: 10px;
         }
 
         .hero-description {
-          font-size: 20px;
-          color: rgba(255, 255, 255, 0.9);
-          line-height: 1.8;
-          margin-bottom: 40px;
+          font-size: 21px;
+          color: rgba(255, 255, 255, 0.75);
+          line-height: 1.6;
+          margin-bottom: 45px;
           font-weight: 300;
+          max-width: 750px;
+          margin-left: auto;
+          margin-right: auto;
         }
 
         .hero-features {
           display: flex;
-          gap: 40px;
+          gap: 50px;
           justify-content: center;
-          margin-bottom: 50px;
+          margin-bottom: 55px;
         }
 
         .feature-item {
