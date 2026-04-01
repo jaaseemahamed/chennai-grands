@@ -31,10 +31,11 @@ function Navbar({ onBack, user, onLogout, onLogin }) {
           <li className="nav-hide-mobile"><a href="#amenities">Amenities</a></li>
           <li className="nav-hide-mobile"><a href="#contact">Contact</a></li>
           <li>
-            {user ? (
-              <button className="hv-logout-btn" onClick={onLogout}>Sign Out</button>
-            ) : (
-              <button className="hv-logout-btn" onClick={onLogin}>Sign In</button>
+            {user && (
+              <div className="cv-user-info">
+                <span className="cv-welcome-text">Welcome, {user.displayName || user.name || 'Guest'}</span>
+                <button className="hv-logout-btn" onClick={onLogout}>Sign Out</button>
+              </div>
             )}
           </li>
         </ul>
@@ -532,6 +533,26 @@ export default function CityViewResidency({ onBack, user, onLogout, onLogin }) {
         .hv-logout-btn:hover {
           background: rgba(30, 80, 160, 0.15);
           color: #1e88e5;
+        }
+
+        .cv-user-info {
+          display: flex;
+          align-items: center;
+          gap: 12px;
+        }
+
+        .cv-welcome-text {
+          font-size: 14px;
+          font-weight: 500;
+          color: #1a1a1a;
+          border-right: 1px solid rgba(0,0,0,0.1);
+          padding-right: 12px;
+        }
+
+        @media (max-width: 768px) {
+          .cv-welcome-text {
+            display: none;
+          }
         }
 
         /* Premium Lighting & Particles */

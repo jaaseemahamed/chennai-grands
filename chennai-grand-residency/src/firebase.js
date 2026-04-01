@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, updateProfile, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { getFirestore, doc, setDoc, serverTimestamp } from "firebase/firestore";
 
 const firebaseConfig = {
@@ -49,6 +49,26 @@ export async function signIn(email, password) {
 
   // Update last login in Firestore (non-blocking)
   setDoc(doc(db, "users", user.uid), {
+    lastLogin: serverTimestamp()
+  }, { merge: true }).catch(console.error);
+
+  return {
+    localId: user.uid,
+    email: user.email,
+    displayName: user.displayName,
+    idToken: await user.getIdToken()
+  };
+}
+
+export async function signInWithGoogle() {
+  const provider = new GoogleAuthProvider();
+  const result = await signInWithPopup(auth, provider);
+  const user = result.user;
+
+  // Store user profile in Firestore (non-blocking)
+  setDoc(doc(db, "users", user.uid), {
+    name: user.displayName || "",
+    email: user.email || "",
     lastLogin: serverTimestamp()
   }, { merge: true }).catch(console.error);
 

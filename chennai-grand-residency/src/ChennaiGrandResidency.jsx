@@ -33,10 +33,11 @@ function Navbar({ onBack, user, onLogout, onLogin }) {
           <li className="nav-hide-mobile"><a href="#amenities">Amenities</a></li>
           <li className="nav-hide-mobile"><a href="#contact">Contact</a></li>
           <li>
-            {user ? (
-              <button className="hv-logout-btn" onClick={onLogout}>Sign Out</button>
-            ) : (
-              <button className="hv-logout-btn" onClick={onLogin}>Sign In</button>
+            {user && (
+              <div className="user-info">
+                <span className="welcome-text">Welcome, {user.displayName || user.name || 'Guest'}</span>
+                <button className="hv-logout-btn" onClick={onLogout}>Sign Out</button>
+              </div>
             )}
           </li>
         </ul>
@@ -605,6 +606,26 @@ export default function ChennaiGrandResidency({ onBack, user, onLogout, onLogin 
         .hv-logout-btn:hover {
           background: rgba(212, 175, 55, 0.15);
           color: #d4af37;
+        }
+
+        .user-info {
+          display: flex;
+          align-items: center;
+          gap: 12px;
+        }
+
+        .welcome-text {
+          font-size: 14px;
+          font-weight: 500;
+          color: #1a1a1a;
+          border-right: 1px solid rgba(0,0,0,0.1);
+          padding-right: 12px;
+        }
+
+        @media (max-width: 768px) {
+          .welcome-text {
+            display: none;
+          }
         }
 
         /* Premium Lighting & Particles */

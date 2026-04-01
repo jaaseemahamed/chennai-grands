@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { MapPin, Star, Mountain, Building2, ArrowRight } from "lucide-react";
 import ChatBot from "./ChatBot";
 
-export default function LandingPage({ onSelectResort, user, onLogout }) {
+export default function LandingPage({ onSelectResort, user, onLogout, onLogin }) {
   const [hovered, setHovered] = useState(null);
   const [visible, setVisible] = useState(false);
 
@@ -31,13 +31,11 @@ export default function LandingPage({ onSelectResort, user, onLogout }) {
             <span className="landing-brand-sub">RESIDENCY GROUP</span>
           </div>
         </div>
-        {user ? (
+        {user && (
           <div className="landing-user-bar">
-            <span className="landing-user-greet">👋 Welcome, <strong>{user.name || user.email}</strong></span>
+            <span className="landing-user-greet">👋 Welcome, <strong>{user.displayName || user.name || user.email}</strong></span>
             <button className="landing-logout-btn" onClick={onLogout}>Sign Out</button>
           </div>
-        ) : (
-          <button className="landing-logout-btn" onClick={onLogin}>Sign In</button>
         )}
       </header>
 

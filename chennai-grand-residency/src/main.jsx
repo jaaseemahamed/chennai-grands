@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import ReactDOM from 'react-dom/client'
-import LoginPage from './LoginPage.jsx'
 import LandingPage from './LandingPage.jsx'
 import ChennaiGrandResidency from './ChennaiGrandResidency.jsx'
 import CityViewResidency from './CityViewResidency.jsx'
-import { getSession, clearSession } from './firebase.js'
+import { getSession, clearSession, signInWithGoogle, saveSession } from './firebase.js'
 
 function App() {
   const [user, setUser] = useState(null);           // logged-in user
@@ -38,9 +37,17 @@ function App() {
     window.scrollTo(0, 0);
   };
 
-  const handleLoginRequest = () => {
-    setCurrentView('login');
-    window.scrollTo(0, 0);
+  const handleLoginRequest = async () => {
+    try {
+      const user = await signInWithGoogle();
+      saveSession(user);
+      handleLoginSuccess(user);
+    } catch (err) {
+      console.error("Google Sign-In Error:", err);
+      if (err.code !== 'auth/popup-closed-by-user') {
+        alert("Failed to sign in with Google. Please try again.");
+      }
+    }
   };
 
   // Don't render until we've checked localStorage
@@ -48,9 +55,7 @@ function App() {
 
   // Determine which page to show based on currentView
   // All pages are now technically public for SEO, but booking features will require login
-  if (currentView === 'login') {
-    return <LoginPage onLoginSuccess={handleLoginSuccess} onBack={handleBack} />;
-  }
+
 
   if (currentView === 'hill') {
     return <ChennaiGrandResidency onBack={handleBack} user={user} onLogout={handleLogout} onLogin={handleLoginRequest} />;
